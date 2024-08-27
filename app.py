@@ -1,9 +1,9 @@
-import pickle
 from flask import Flask, request, app, jsonify, render_template
 import numpy as np
+import pickle
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('model_sklearn.pkl', 'rb'))
 
 
 @app.route('/')
@@ -25,9 +25,8 @@ def predict():
     data = [float(x) for x in request.form.values()]
     final_features = [np.array(data)]
     print(data)
-
     output = model.predict(final_features)[0]
-    return render_template('home.html', prediction_text="Airfoil pressure is {}".format(output))
+    return render_template('home.html', prediction_text=f"Airfoil pressure is {output}")
 
 
 if __name__ == "__main__":
